@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from "react";
-import { Sparkles, MoveHorizontal } from "lucide-react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { MoveHorizontal } from "lucide-react";
 
 interface BeforeAfterSliderProps {
   beforeImage: string;
@@ -24,7 +24,19 @@ export function BeforeAfterSlider({
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      setContainerWidth(entries[0].contentRect.width);
+    });
+    ro.observe(el);
+    setContainerWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, []);
 
   const handleMove = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -47,23 +59,22 @@ export function BeforeAfterSlider({
     <div className="space-y-4">
       {title && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h4 className="font-serif text-xl sm:text-2xl text-[#2B2230] font-normal">{title}</h4>
-            {description && <p className="text-xs text-[#6B5F6B] mt-1">{description}</p>}
-          </div>
+          <h4 className="font-serif text-xl sm:text-2xl text-[#2B2230] font-normal">{title}</h4>
           <span className="text-[11px] text-[#A9745B] font-medium flex items-center gap-1.5 bg-[#FFFDE8] px-3 py-1 rounded-full border border-[#E3D9C6] w-fit">
-            <MoveHorizontal className="w-3.5 h-3.5" /> Drag or tap slider to compare
+            <MoveHorizontal className="w-3.5 h-3.5" /> Drag to compare
           </span>
         </div>
       )}
 
       <div
         ref={containerRef}
-        className="relative h-80 sm:h-[420px] w-full overflow-hidden rounded-[26px] select-none cursor-ew-resize border border-[#E3D9C6] shadow-lg bg-[#EFE6EE]"
+        className="relative h-72 sm:h-[420px] w-full overflow-hidden rounded-[26px] select-none cursor-ew-resize border border-[#E3D9C6] shadow-lg bg-[#EFE6EE]"
+        style={{ touchAction: "none" }}
         onMouseDown={() => setIsDragging(true)}
         onMouseUp={() => setIsDragging(false)}
         onMouseLeave={() => setIsDragging(false)}
         onMouseMove={handleMouseMove}
+        onTouchStart={(e) => handleMove(e.touches[0].clientX)}
         onTouchMove={handleTouchMove}
         onClick={(e) => handleMove(e.clientX)}
       >
@@ -84,19 +95,10 @@ export function BeforeAfterSlider({
             alt={beforeAlt}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none filter grayscale contrast-105"
             style={{
-              width: containerRef.current ? `${containerRef.current.clientWidth}px` : "100%",
+              width: containerWidth > 0 ? `${containerWidth}px` : "100%",
               maxWidth: "none",
             }}
           />
-        </div>
-
-        {/* Labels */}
-        <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-[#2E1F2E]/80 backdrop-blur-md text-[#FFFDE8] text-[10px] font-semibold uppercase tracking-wider">
-          {beforeLabel}
-        </div>
-        <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-[#664465]/90 backdrop-blur-md text-[#FFFDE8] text-[10px] font-semibold uppercase tracking-wider flex items-center gap-1.5">
-          <Sparkles className="w-3 h-3 text-[#C9A97A]" />
-          <span>{afterLabel}</span>
         </div>
 
         {/* Draggable Divider Handle */}

@@ -22,7 +22,6 @@ import {
   Phone,
   ShieldCheck,
   Sparkles,
-  Star,
   Wrench,
   X,
 } from "lucide-react";
@@ -466,10 +465,10 @@ function HomePage() {
             aria-label="Hue & Pie - home"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <span className="wordmark-name text-[#FFFDE8] tracking-tight">
+            <span className="wordmark-name text-[#FFFDE8] tracking-tight block text-center">
               Hue &amp; Pie
             </span>
-            <span className="wordmark-tagline">Interiors, Your Way.</span>
+            <span className="wordmark-tagline block text-center">Interiors, Your Way.</span>
           </a>
 
           {/* Right Header Action Buttons - Direct Phone, Price Calculator, and Free Quote */}
@@ -504,11 +503,12 @@ function HomePage() {
             {/* Get Free Quote Button - solid brass CTA */}
             <button
               type="button"
-              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-[#C9A97A] text-[#2B2230] hover:bg-[#B8935F] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-full bg-[#C9A97A] text-[#FFFDE8] hover:bg-[#B8935F] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
               onClick={() => handleOpenConsultation()}
             >
-              <span>Get Free Quote</span>
-              <ArrowUpRight size={15} aria-hidden="true" />
+              <span className="hidden xs:inline sm:inline">Get Free Quote</span>
+              <span className="xs:hidden sm:hidden">Quote</span>
+              <ArrowUpRight size={14} aria-hidden="true" />
             </button>
 
             {/* Mobile Menu Toggle Button */}
@@ -578,7 +578,7 @@ function HomePage() {
           SECTION 01 - HERO WITH LUXURY MIDNIGHT GLASS CONSULTATION CARD
           ========================================================================= */}
       <section
-        className="hero relative min-h-[640px] lg:min-h-[720px] flex items-center pt-28 pb-16 sm:py-28"
+        className="hero relative flex items-start sm:items-center pt-24 pb-10 sm:pt-28 sm:pb-16"
         id="home"
       >
         <img
@@ -601,9 +601,9 @@ function HomePage() {
               className="lg:col-span-7"
             >
 
-              <h1 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.15] tracking-tight mb-4">
-                Hue &amp; Pie -<br />
-                <em className="text-[#C9A97A] italic font-normal">
+              <h1 className="font-serif text-[28px] sm:text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.2] tracking-tight mb-3 sm:mb-4">
+                Hue &amp; Pie<span className="hidden sm:inline"> -</span><br className="hidden sm:block" />
+                <em className="text-[#C9A97A] italic font-normal sm:block">
                   Beautiful Homes, Designed for You.
                 </em>
               </h1>
@@ -627,105 +627,107 @@ function HomePage() {
               </div>
             </motion.div>
 
-            {/* Right Column: Midnight Aubergine Glass Card */}
+            {/* Right Column: Light Consultation Card */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
               className="lg:col-span-5"
             >
-              <div className="p-6 sm:p-8 rounded-[28px] bg-[#FFFDE8]/96 backdrop-blur-xl border border-[#E3D9C6] shadow-2xl text-[#2B2230]">
-                <div className="mb-5">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#664465] block mb-1">
-                    Free 3D Consultation
-                  </span>
-                  <h3 className="font-serif text-2xl sm:text-[26px] font-medium text-[#2B2230] leading-tight">
+              <div className="rounded-[28px] bg-[#FFFDE8]/94 backdrop-blur-2xl border border-[#E3D9C6] shadow-2xl overflow-hidden">
+                {/* Card header strip */}
+                <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-4 sm:pb-5 border-b border-[#E3D9C6]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="w-2 h-2 rounded-full bg-[#664465] block" />
+                    <span className="text-[11px] font-semibold uppercase tracking-widest text-[#664465]">
+                      Free 3D Consultation
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-2xl font-normal text-[#2B2230] leading-snug">
                     Talk to a Senior Designer
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#6B5F6B] mt-1.5">
-                    Get an itemized 3D design plan &amp; accurate quote.
+                  <p className="text-sm text-[#6B5F6B] mt-1">
+                    Get a 3D plan + itemised quote — no commitment needed.
                   </p>
                 </div>
 
-                <form onSubmit={handleHeroFormSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#2B2230] mb-1.5">
-                      Your Full Name
-                    </label>
+                <form onSubmit={handleHeroFormSubmit} className="px-5 sm:px-7 py-5 sm:py-6 space-y-3 sm:space-y-4">
+                  {/* Name field */}
+                  <div className="relative">
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Arvind Sharma"
+                      id="hero-name"
+                      placeholder=" "
                       value={heroForm.name}
                       onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl border border-[#E3D9C6] bg-white text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/60 focus:outline-none focus:border-[#664465] focus:ring-1 focus:ring-[#664465]/30 transition-colors"
+                      className="peer w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm placeholder-transparent focus:outline-none focus:border-[#664465] focus:ring-1 focus:ring-[#664465]/20 transition-all"
+                    />
+                    <label
+                      htmlFor="hero-name"
+                      className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[#6B5F6B]/60 peer-placeholder-shown:font-normal transition-all pointer-events-none"
+                    >
+                      Your Name
+                    </label>
+                  </div>
+
+                  {/* Phone field */}
+                  <div className="flex rounded-2xl border border-[#E3D9C6] bg-white overflow-hidden focus-within:border-[#664465] focus-within:ring-1 focus-within:ring-[#664465]/20 transition-all">
+                    <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">
+                      +91
+                    </span>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Phone number"
+                      value={heroForm.phone}
+                      onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
+                      className="w-full px-4 py-3.5 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/50 bg-transparent focus:outline-none"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-[#2B2230] mb-1.5">
-                      Phone Number
-                    </label>
-                    <div className="flex rounded-xl border border-[#E3D9C6] bg-white overflow-hidden focus-within:border-[#664465] focus-within:ring-1 focus-within:ring-[#664465]/30 transition-colors">
-                      <span className="px-3.5 py-2.5 bg-[#F3ECDD] text-xs font-semibold text-[#664465] border-r border-[#E3D9C6] flex items-center">
-                        +91
-                      </span>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="98765 43210"
-                        value={heroForm.phone}
-                        onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
-                        className="w-full px-3.5 py-2.5 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/60 focus:outline-none bg-transparent"
-                      />
-                    </div>
-                  </div>
-
+                  {/* City + BHK row */}
                   <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-semibold text-[#2B2230] mb-1.5">
-                        City
-                      </label>
+                    <div className="relative">
                       <select
                         value={heroForm.city}
                         onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl border border-[#E3D9C6] bg-white text-xs font-medium text-[#2B2230] focus:outline-none focus:border-[#664465]"
+                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] transition-all appearance-none cursor-pointer"
                       >
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Hyderabad">Hyderabad</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Pune">Pune</option>
+                        <option value="Bangalore" className="">Bangalore</option>
+                        <option value="Hyderabad" className="">Hyderabad</option>
+                        <option value="Mumbai" className="">Mumbai</option>
+                        <option value="Pune" className="">Pune</option>
                       </select>
+                      <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
                     </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-[#2B2230] mb-1.5">
-                        Property Type
-                      </label>
+                    <div className="relative">
                       <select
                         value={heroForm.bhk}
                         onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl border border-[#E3D9C6] bg-white text-xs font-medium text-[#2B2230] focus:outline-none focus:border-[#664465]"
+                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] transition-all appearance-none cursor-pointer"
                       >
-                        <option value="1 BHK">1 BHK</option>
-                        <option value="2 BHK">2 BHK</option>
-                        <option value="3 BHK">3 BHK</option>
-                        <option value="4+ BHK / Villa">4+ BHK / Villa</option>
+                        <option value="1 BHK" className="">1 BHK</option>
+                        <option value="2 BHK" className="">2 BHK</option>
+                        <option value="3 BHK" className="">3 BHK</option>
+                        <option value="4+ BHK / Villa" className="">4+ BHK / Villa</option>
                       </select>
+                      <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
                     </div>
                   </div>
 
+                  {/* Submit */}
                   <button
                     type="submit"
-                    className="btn-cream w-full justify-center py-3.5 text-sm font-bold shadow-xl cursor-pointer mt-2 hover:bg-[#C9A97A] hover:text-[#664465] transition-all"
+                    className="w-full py-3.5 rounded-2xl bg-[#664465] text-[#FFFDE8] text-sm font-bold tracking-wide hover:bg-[#4F3150] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2 mt-1"
                   >
                     <span>Get Free Quote &amp; 3D Plan</span>
                     <ArrowUpRight size={16} />
                   </button>
 
-                  <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5 pt-1">
+                  <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#664465]" />
-                    <span>100% Free Consultation • Zero Spam • Direct Designer Callback</span>
+                    <span>Free Consultation &bull; Zero Spam &bull; Direct Callback</span>
                   </p>
                 </form>
               </div>
@@ -800,7 +802,7 @@ function HomePage() {
       {/* =========================================================================
           SECTION 03 - HOMES FOR EVERY BUDGET (2 IMAGES PER ROW, NO BADGES)
           ========================================================================= */}
-      <section className="py-18 sm:py-24 section-wrap" id="budgets">
+      <section className="py-14 sm:py-24 section-wrap" id="budgets">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1212,7 +1214,7 @@ function HomePage() {
       {/* =========================================================================
           SECTION 09 - YOUR HOME INTERIOR JOURNEY (ANIMATED CONNECTED TIMELINE)
           ========================================================================= */}
-      <section className="py-18 sm:py-26 section-wrap" id="process">
+      <section className="py-14 sm:py-24 section-wrap" id="process">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1248,7 +1250,7 @@ function HomePage() {
                 <div>
                   <div className="flex items-center justify-between mb-5">
                     {/* Glowing Milestone Step Node */}
-                    <div className="w-13 h-13 rounded-2xl bg-[#664465] text-[#FFFDE8] flex items-center justify-center font-serif text-xl font-bold shadow-md border-2 border-[#C9A97A]">
+                    <div className="w-12 h-12 rounded-2xl bg-[#664465] text-[#FFFDE8] flex items-center justify-center font-serif text-xl font-bold shadow-md border-2 border-[#C9A97A]">
                       {step.number}
                     </div>
                   </div>
@@ -1288,7 +1290,7 @@ function HomePage() {
               </p>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {[
                 { id: 0, label: "Living Room" },
                 { id: 1, label: "Modular Kitchen" },
@@ -1342,54 +1344,65 @@ function HomePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 11 - HAPPY CUSTOMERS (VERIFIED TESTIMONIALS)
+          SECTION 11 - HAPPY CUSTOMERS (AUTO-SCROLLING REVIEWS MARQUEE)
           ========================================================================= */}
-      <section className="py-16 sm:py-24 section-wrap" id="reviews">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-10 sm:mb-14"
-        >
-          <h2 className="section-title text-[#2B2230] mb-2">What Clients Say</h2>
-          <p className="text-base sm:text-lg text-[#6B5F6B]">
-            Authentic experiences from homeowners who trusted us with their dream interiors.
-          </p>
-        </motion.div>
+      <section className="py-16 sm:py-24 overflow-hidden" id="reviews">
+        <div className="section-wrap">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-2xl mx-auto mb-10 sm:mb-14"
+          >
+            <h2 className="section-title text-[#2B2230] mb-2">What Clients Say</h2>
+            <p className="text-base sm:text-lg text-[#6B5F6B]">
+              Authentic experiences from homeowners who trusted us with their dream interiors.
+            </p>
+          </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {customerTestimonials.map((review, idx) => (
-            <motion.div
-              key={review.author}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              whileHover={{ y: -4 }}
-              className="p-7 rounded-[24px] bg-[#FFFDE8] border border-[#E3D9C6] shadow-xs flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex gap-1 text-[#C9A97A] mb-3.5">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
+        {/* Infinite auto-scroll marquee */}
+        <div className="relative w-full">
+          {/* Left fade */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r from-[#FFFDE8] to-transparent" />
+          {/* Right fade */}
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l from-[#FFFDE8] to-transparent" />
+
+          <div className="flex gap-6 w-max animate-marquee hover:[animation-play-state:paused]">
+            {[...customerTestimonials, ...customerTestimonials, ...customerTestimonials].map((review, idx) => (
+              <div
+                key={idx}
+                className="w-[300px] sm:w-[360px] shrink-0 p-5 sm:p-7 rounded-[24px] bg-[#FFFDE8] border border-[#E3D9C6] shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  {/* Google-style verified badge */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" aria-label="Google">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span className="text-xs font-semibold text-[#5F6368]">Google Review</span>
+                    <span className="ml-auto text-xs text-[#FBBC05] font-bold tracking-tight">★★★★★</span>
+                  </div>
+                  <p className="text-sm sm:text-base text-[#2B2230] leading-relaxed mb-5">
+                    "{review.quote}"
+                  </p>
                 </div>
-                <p className="text-sm sm:text-base text-[#2B2230] italic leading-relaxed mb-5">
-                  "{review.quote}"
-                </p>
-              </div>
 
-              <div className="pt-3.5 border-t border-[#E3D9C6]">
-                <span className="font-sans text-sm sm:text-base font-medium text-[#2B2230] block">
-                  {review.author}
-                </span>
-                <span className="text-xs text-[#664465] font-semibold block mt-0.5">
-                  {review.property}
-                </span>
+                <div className="pt-3.5 border-t border-[#E3D9C6]">
+                  <span className="font-sans text-sm font-semibold text-[#2B2230] block">
+                    {review.author}
+                  </span>
+                  <span className="text-xs text-[#664465] font-medium block mt-0.5">
+                    {review.property}
+                  </span>
+                </div>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1426,10 +1439,10 @@ function HomePage() {
               <Accordion type="single" collapsible className="divide-y divide-[#E3D9C6] border-y border-[#E3D9C6]">
                 {faqs.map((faq, idx) => (
                   <AccordionItem key={idx} value={`faq-${idx}`} className="border-b-0 group">
-                    <AccordionTrigger className="text-lg font-medium text-[#2B2230] hover:text-[#664465] hover:no-underline py-5 cursor-pointer text-left transition-colors">
+                    <AccordionTrigger className="text-xl font-medium text-[#2B2230] hover:text-[#664465] hover:no-underline py-6 cursor-pointer text-left transition-colors leading-snug">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-base text-[#6B5F6B] leading-relaxed pb-5">
+                    <AccordionContent className="text-[17px] text-[#6B5F6B] leading-relaxed pb-6">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -1577,17 +1590,17 @@ function HomePage() {
       />
 
       {/* Floating Right Side - WhatsApp, Call, and Scroll to Top stacked */}
-      <div className="fixed bottom-6 right-5 sm:right-6 z-40 flex flex-col gap-3 items-end">
+      <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col gap-2.5 sm:gap-3 items-end">
         {/* WhatsApp Button */}
         <a
           href="https://wa.me/919845012345?text=Hi%20Hue%20%26%20Pie%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="group relative flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-[#25D366]/20 hover:ring-[#25D366]/40 cursor-pointer"
+          className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-[#25D366]/20 hover:ring-[#25D366]/40 cursor-pointer"
         >
           <svg
-            className="w-6 h-6 fill-current"
+            className="w-5 h-5 sm:w-6 sm:h-6 fill-white"
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
@@ -1602,9 +1615,9 @@ function HomePage() {
         <a
           href="tel:+919845012345"
           aria-label="Call +91 98450 12345"
-          className="group relative flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#664465] text-[#FFFDE8] border border-[#C9A97A]/40 shadow-xl hover:bg-[#4F3150] hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-[#664465]/20 hover:ring-[#664465]/40 cursor-pointer"
+          className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#664465] text-[#FFFDE8] border border-[#C9A97A]/40 shadow-xl hover:bg-[#4F3150] hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-[#664465]/20 hover:ring-[#664465]/40 cursor-pointer"
         >
-          <Phone className="w-5 h-5 text-[#C9A97A]" />
+          <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#C9A97A]" />
           <span className="absolute right-full mr-3 px-3 py-1.5 rounded-xl bg-[#2B2230] text-[#FFFDE8] text-xs font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap hidden sm:inline-block">
             Call +91 98450 12345
           </span>
@@ -1621,9 +1634,9 @@ function HomePage() {
               exit={{ opacity: 0, scale: 0.7, y: 15 }}
               transition={{ duration: 0.25 }}
               aria-label="Scroll to top"
-              className="group flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#FFFDE8] text-[#2B2230] border border-[#E3D9C6] shadow-xl hover:bg-[#664465] hover:text-[#FFFDE8] hover:border-[#664465] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+              className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#FFFDE8] text-[#2B2230] border border-[#E3D9C6] shadow-xl hover:bg-[#664465] hover:text-[#FFFDE8] hover:border-[#664465] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
             >
-              <ArrowUp className="w-5 h-5 transition-transform group-hover:-translate-y-1" />
+              <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-y-1" />
               <span className="absolute right-full mr-3 px-3 py-1.5 rounded-xl bg-[#2B2230] text-[#FFFDE8] text-xs font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap hidden sm:inline-block">
                 Back to Top
               </span>

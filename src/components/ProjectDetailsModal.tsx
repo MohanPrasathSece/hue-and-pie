@@ -112,7 +112,7 @@ export function ProjectDetailsModal({
               </div>
             </div>
 
-            <div className="p-4 rounded-[18px] bg-white border border-[#E3D9C6] flex items-center justify-between gap-4">
+            <div className="p-4 rounded-[18px] bg-white border border-[#E3D9C6] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="text-xs text-[#6B5F6B]">
                 <strong className="text-[#2B2230] block">
                   Interested in a similar spatial language?
@@ -126,7 +126,7 @@ export function ProjectDetailsModal({
                   onOpenChange(false);
                   onEnquire(project.name);
                 }}
-                className="btn-primary text-xs py-2.5 px-5 shrink-0"
+                className="btn-primary text-xs py-2.5 px-5 shrink-0 w-full sm:w-auto justify-center"
               >
                 <span>Enquire About This Project</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />

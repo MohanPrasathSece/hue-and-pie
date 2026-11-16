@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -61,7 +61,7 @@ export function ConsultationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto p-0 border border-[#E3D9C6] rounded-[26px] bg-[#FFFDE8] text-[#2B2230] shadow-2xl">
-        <div className="relative p-6 sm:p-9 bg-gradient-to-b from-[#EFE6EE]/60 to-[#FFFDE8]">
+        <div className="relative p-5 sm:p-9 bg-gradient-to-b from-[#EFE6EE]/60 to-[#FFFDE8]">
           <DialogHeader className="space-y-2 text-left pr-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFE6EE] border border-[#664465]/20 text-[#664465] text-xs font-medium w-fit">
               <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
@@ -207,7 +207,7 @@ export function ConsultationDialog({
                 <label className="text-xs font-medium uppercase tracking-wider text-[#6B5F6B]">
                   Project Possession / Timeline
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {["Immediate / Ready", "Within 1-3 Months", "Planning Stage (3+ Mos)"].map(
                     (t) => (
                       <button
