@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -420,6 +420,18 @@ function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when full-screen mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -500,15 +512,15 @@ function HomePage() {
               <span>Price Calculator</span>
             </a>
 
-            {/* Get Free Quote Button - solid brass CTA with dark high-contrast text */}
+            {/* 1. Header Gold CTA Button */}
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-full bg-[#C9A97A] text-[#2B2230] hover:bg-[#D4B588] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
+              style={{ backgroundColor: "#C9A97A", color: "#FFFFFF" }}
+              className="btn-gold-cta px-3.5 sm:px-5 py-2 text-xs sm:text-sm whitespace-nowrap"
               onClick={() => handleOpenConsultation()}
             >
-              <span className="hidden xs:inline sm:inline">Get Free Quote</span>
-              <span className="xs:hidden sm:hidden">Quote</span>
-              <ArrowUpRight size={14} aria-hidden="true" className="text-[#2B2230]" />
+              <span style={{ color: "#FFFFFF" }}>Get Free Quote</span>
+              <ArrowUpRight size={15} color="#FFFFFF" className="shrink-0" />
             </button>
 
             {/* Mobile Menu Toggle Button */}
@@ -529,46 +541,120 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Full Screen Mobile Navigation Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
               id="mobile-navigation"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden absolute top-full left-0 right-0 bg-[#664465]/98 backdrop-blur-xl border-b border-[#C9A97A]/30 py-5 px-6 shadow-2xl flex flex-col gap-3"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile Navigation"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="md:hidden fixed inset-0 z-[100] bg-[#664465] text-[#FFFDE8] flex flex-col justify-between overflow-y-auto px-6 py-6 shadow-2xl"
+              style={{ minHeight: "100svh" }}
             >
-              <a
-                href="tel:+919845012345"
-                className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-[#FFFDE8]/25 bg-[#FFFDE8]/10 text-[#FFFDE8] font-medium text-sm hover:bg-[#FFFDE8]/20 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Phone className="w-4 h-4" />
-                <span>Call +91 98450 12345</span>
-              </a>
+              {/* Header inside overlay: Logo on left, Close button on right */}
+              <div className="flex items-center justify-between pb-5 border-b border-[#FFFDE8]/15">
+                <a
+                  className="wordmark group"
+                  href="#home"
+                  aria-label="Hue & Pie - home"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="wordmark-name text-[#FFFDE8] tracking-tight block text-left">
+                    Hue &amp; Pie
+                  </span>
+                  <span className="wordmark-tagline block text-left">Interiors, Your Way.</span>
+                </a>
 
-              <a
-                href="#estimate"
-                className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-[#FFFDE8]/25 bg-[#FFFDE8]/10 text-[#FFFDE8] font-medium text-sm hover:bg-[#FFFDE8]/20 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Calculator className="w-4 h-4" />
-                <span>Price Calculator</span>
-              </a>
+                {/* Prominent Close Icon Button */}
+                <button
+                  type="button"
+                  aria-label="Close navigation menu"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-11 h-11 rounded-full border border-[#FFFDE8]/30 bg-[#FFFDE8]/10 text-[#FFFDE8] hover:bg-[#FFFDE8]/20 flex items-center justify-center cursor-pointer transition-all active:scale-95 shadow-md"
+                >
+                  <X size={22} className="text-[#FFFDE8]" />
+                </button>
+              </div>
 
-              <button
-                type="button"
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#C9A97A] text-[#2B2230] font-bold text-sm shadow-md cursor-pointer hover:bg-[#B8935F] transition-colors"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  handleOpenConsultation();
-                }}
-              >
-                <span>Get Free Quote</span>
-                <ArrowUpRight size={16} />
-              </button>
+              {/* Main Navigation Links */}
+              <div className="py-6 flex flex-col gap-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A97A]">
+                  Navigation
+                </span>
+                <nav className="flex flex-col gap-3">
+                  {[
+                    { label: "Home", href: "#home" },
+                    { label: "Recent Work", href: "#projects" },
+                    { label: "Spaces for Every Budget", href: "#pricing" },
+                    { label: "Why We're Different", href: "#benefits" },
+                    { label: "Price Calculator", href: "#estimate" },
+                    { label: "Client Stories", href: "#reviews" },
+                    { label: "FAQ", href: "#faq" },
+                  ].map((link, idx) => (
+                    <motion.a
+                      key={link.label}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.22, delay: 0.04 + idx * 0.03 }}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="font-serif text-2xl text-[#FFFDE8] hover:text-[#C9A97A] transition-colors flex items-center justify-between group py-1 border-b border-[#FFFDE8]/5"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowUpRight size={18} className="text-[#C9A97A] opacity-60 group-hover:opacity-100 transition-opacity" />
+                    </motion.a>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Footer CTA & Contact section */}
+              <div className="pt-5 border-t border-[#FFFDE8]/15 flex flex-col gap-3">
+                {/* Free Quote Button */}
+                <button
+                  type="button"
+                  style={{ backgroundColor: "#C9A97A", color: "#FFFFFF" }}
+                  className="btn-gold-cta w-full py-3.5 text-sm font-bold shadow-lg"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleOpenConsultation();
+                  }}
+                >
+                  <span style={{ color: "#FFFFFF" }}>Get Free Quote</span>
+                  <ArrowUpRight size={16} color="#FFFFFF" className="shrink-0" />
+                </button>
+
+                {/* Call & WhatsApp actions */}
+                <div className="grid grid-cols-2 gap-3">
+                  <a
+                    href="tel:+919845012345"
+                    className="flex items-center justify-center gap-2 py-3 px-3 rounded-full border border-[#FFFDE8]/25 bg-[#FFFDE8]/10 text-[#FFFDE8] text-xs font-medium hover:bg-[#FFFDE8]/20 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Phone className="w-4 h-4 text-[#C9A97A]" />
+                    <span>Call Us</span>
+                  </a>
+
+                  <a
+                    href="https://wa.me/919845012345?text=Hi%20Hue%20%26%20Pie%20team%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-3 px-3 rounded-full border border-[#25D366]/40 bg-[#25D366]/15 text-[#FFFDE8] text-xs font-medium hover:bg-[#25D366]/25 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+
+                <div className="text-center pt-1 text-[11px] text-[#FFFDE8]/60">
+                  Bangalore &bull; Hyderabad &bull; Mumbai &bull; Pune
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -636,21 +722,24 @@ function HomePage() {
                 </p>
 
                 {/* CTA buttons */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="hero-actions flex flex-wrap items-center gap-3">
+                  {/* 2. Hero Primary Gold CTA Button */}
                   <button
                     type="button"
                     onClick={() => handleOpenConsultation()}
-                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#C9A97A] text-[#2B2230] font-bold text-sm tracking-wide hover:bg-[#D4B588] transition-all shadow-lg hover:shadow-xl cursor-pointer"
+                    style={{ backgroundColor: "#C9A97A", color: "#FFFFFF" }}
+                    className="btn-gold-cta px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-bold shadow-lg hover:shadow-xl w-auto"
                   >
-                    <span>Book Free Consultation</span>
-                    <ArrowUpRight size={16} className="text-[#2B2230]" />
+                    <span style={{ color: "#FFFFFF" }}>Get Free Quote</span>
+                    <ArrowUpRight size={16} color="#FFFFFF" className="shrink-0" />
                   </button>
                   <a
                     href="#projects"
-                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#FFFDE8]/40 bg-white/10 backdrop-blur-sm text-[#FFFDE8] font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer"
+                    style={{ color: "#FFFFFF" }}
+                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-white/60 bg-white/10 backdrop-blur-sm !text-white font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer shadow-sm hover:shadow-md w-auto"
                   >
-                    <span>See Our Work</span>
-                    <ArrowUpRight size={15} />
+                    <span style={{ color: "#FFFFFF" }}>See Our Work</span>
+                    <ArrowUpRight size={16} color="#FFFFFF" className="shrink-0" />
                   </a>
                 </div>
               </motion.div>
@@ -746,13 +835,14 @@ function HomePage() {
                     ))}
                   </div>
 
-                  {/* Submit Button — Solid brass matching hero primary CTA */}
+                  {/* 3. Hero Form Submit Gold CTA Button */}
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-2xl bg-[#C9A97A] hover:bg-[#D4B588] text-[#2B2230] text-sm font-bold tracking-wide transition-all shadow-lg hover:shadow-xl cursor-pointer flex items-center justify-center gap-2 border border-[#B8935F]/30"
+                    style={{ backgroundColor: "#C9A97A", color: "#FFFFFF" }}
+                    className="btn-gold-cta w-full py-3.5 text-sm font-bold shadow-lg hover:shadow-xl"
                   >
-                    <span>Get Free Quote &amp; 3D Plan</span>
-                    <ArrowUpRight size={16} className="text-[#2B2230]" />
+                    <span style={{ color: "#FFFFFF" }}>Get Free Quote</span>
+                    <ArrowUpRight size={16} color="#FFFFFF" className="shrink-0" />
                   </button>
 
                   <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
