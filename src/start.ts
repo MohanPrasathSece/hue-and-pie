@@ -1,11 +1,18 @@
 import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
+import { isAbortError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
-const errorMiddleware = createMiddleware().server(async ({ next }) => {
+const errorMiddleware = createMiddleware().server(async ({ next, request }) => {
   try {
+    if (request?.signal?.aborted) {
+      return new Response(null, { status: 499, statusText: "Client Closed Request" });
+    }
     return await next();
   } catch (error) {
+    if (request?.signal?.aborted || isAbortError(error)) {
+      return new Response(null, { status: 499, statusText: "Client Closed Request" });
+    }
     if (error != null && typeof error === "object" && "statusCode" in error) {
       throw error;
     }

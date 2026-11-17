@@ -49,11 +49,26 @@ function isErrorLike(value: unknown): value is Error {
   return value instanceof Error;
 }
 
+export function isAbortError(error: unknown): boolean {
+  if (!error) return false;
+  if (error instanceof Error) {
+    if (error.name === "AbortError" || error.message === "aborted") return true;
+    const err = error as { code?: unknown; cause?: unknown };
+    if (err.code === "ECONNRESET" || err.code === "ERR_ABORTED") return true;
+    if (err.cause && isAbortError(err.cause)) return true;
+  }
+  return false;
+}
+
 // Wrap console.error so errors logged by any layer — including h3's internal
 // unhandled-error logging, which this file cannot hook directly — are both
 // recorded for consumeLastCapturedError and expanded before serialization.
 const originalConsoleError = console.error.bind(console);
 console.error = (...args: unknown[]) => {
+  // Gracefully ignore client-aborted requests (e.g. browser disconnects or cancellations)
+  if (args.some((arg) => isAbortError(arg))) {
+    return;
+  }
   const expanded = args.map((arg) => {
     if (!isErrorLike(arg)) return arg;
     record(arg);
@@ -63,10 +78,14 @@ console.error = (...args: unknown[]) => {
 };
 
 if (typeof globalThis.addEventListener === "function") {
-  globalThis.addEventListener("error", (event) => record((event as ErrorEvent).error ?? event));
-  globalThis.addEventListener("unhandledrejection", (event) =>
-    record((event as PromiseRejectionEvent).reason),
-  );
+  globalThis.addEventListener("error", (event) => {
+    const err = (event as ErrorEvent).error ?? event;
+    if (!isAbortError(err)) record(err);
+  });
+  globalThis.addEventListener("unhandledrejection", (event) => {
+    const reason = (event as PromiseRejectionEvent).reason;
+    if (!isAbortError(reason)) record(reason);
+  });
 }
 
 export function consumeLastCapturedError(): unknown {
