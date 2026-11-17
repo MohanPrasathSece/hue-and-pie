@@ -500,15 +500,15 @@ function HomePage() {
               <span>Price Calculator</span>
             </a>
 
-            {/* Get Free Quote Button - solid brass CTA */}
+            {/* Get Free Quote Button - solid brass CTA with dark high-contrast text */}
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-full bg-[#C9A97A] text-[#FFFDE8] hover:bg-[#B8935F] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-full bg-[#C9A97A] text-[#2B2230] hover:bg-[#D4B588] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
               onClick={() => handleOpenConsultation()}
             >
               <span className="hidden xs:inline sm:inline">Get Free Quote</span>
               <span className="xs:hidden sm:hidden">Quote</span>
-              <ArrowUpRight size={14} aria-hidden="true" className="text-[#FFFDE8]" />
+              <ArrowUpRight size={14} aria-hidden="true" className="text-[#2B2230]" />
             </button>
 
             {/* Mobile Menu Toggle Button */}
@@ -591,10 +591,10 @@ function HomePage() {
           className="absolute inset-0 w-full h-full object-cover object-center"
           style={{ zIndex: 0, transform: "translateZ(0)" }}
         />
-        {/* Overlay — strong left shade on desktop, full shade on mobile */}
+        {/* Overlay — strong left shade on desktop, full dark backdrop on mobile */}
         <div
           aria-hidden="true"
-          className="absolute inset-0"
+          className="absolute inset-0 bg-[#2B2230]/75 sm:bg-transparent"
           style={{
             zIndex: 1,
             background: [
@@ -640,14 +640,14 @@ function HomePage() {
                   <button
                     type="button"
                     onClick={() => handleOpenConsultation()}
-                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#C9A97A] text-[#FFFDE8] font-bold text-sm tracking-wide hover:bg-[#B8935F] transition-all shadow-lg cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#C9A97A] text-[#2B2230] font-bold text-sm tracking-wide hover:bg-[#D4B588] transition-all shadow-lg hover:shadow-xl cursor-pointer"
                   >
                     <span>Book Free Consultation</span>
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={16} className="text-[#2B2230]" />
                   </button>
                   <a
                     href="#projects"
-                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#FFFDE8]/30 text-[#FFFDE8] font-semibold text-sm hover:bg-[#FFFDE8]/10 transition-all"
+                    className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-[#FFFDE8]/40 bg-white/10 backdrop-blur-sm text-[#FFFDE8] font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer"
                   >
                     <span>See Our Work</span>
                     <ArrowUpRight size={15} />
@@ -655,12 +655,13 @@ function HomePage() {
                 </div>
               </motion.div>
 
-              {/* ── Right: form card — desktop only ── */}
+              {/* ── Right: form card — visible on mobile and desktop ── */}
               <motion.div
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.18 }}
-                className="hidden lg:block lg:col-span-5"
+                id="hero-consultation-card"
+                className="block lg:col-span-5 w-full mt-8 lg:mt-0"
               >
               <div className="rounded-[28px] overflow-hidden shadow-2xl border border-[#FFFDE8]/15"
                    style={{ background: "rgba(255,253,232,0.96)", backdropFilter: "blur(24px)" }}>
@@ -745,13 +746,13 @@ function HomePage() {
                     ))}
                   </div>
 
-                  {/* Submit */}
+                  {/* Submit Button — Solid brass matching hero primary CTA */}
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-2xl bg-[#664465] text-[#FFFDE8] text-sm font-bold tracking-wide hover:bg-[#4F3150] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-2xl bg-[#C9A97A] hover:bg-[#D4B588] text-[#2B2230] text-sm font-bold tracking-wide transition-all shadow-lg hover:shadow-xl cursor-pointer flex items-center justify-center gap-2 border border-[#B8935F]/30"
                   >
                     <span>Get Free Quote &amp; 3D Plan</span>
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={16} className="text-[#2B2230]" />
                   </button>
 
                   <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
