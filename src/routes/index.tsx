@@ -503,6 +503,14 @@ function HomePage() {
               <Phone className="w-4 h-4" />
             </a>
 
+            {/* The Practice Link */}
+            <a
+              href="/about"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#FFFDE8]/40 bg-transparent text-[#FFFDE8] hover:bg-[#FFFDE8]/15 hover:border-[#FFFDE8]/70 transition-all text-xs lg:text-sm font-medium tracking-wide cursor-pointer"
+            >
+              <span>The Practice</span>
+            </a>
+
             {/* Price Calculator Button */}
             <a
               href="#estimate"
@@ -589,6 +597,7 @@ function HomePage() {
                 <nav className="flex flex-col gap-3">
                   {[
                     { label: "Home", href: "#home" },
+                    { label: "The Practice (About)", href: "/about" },
                     { label: "Recent Work", href: "#projects" },
                     { label: "Spaces for Every Budget", href: "#pricing" },
                     { label: "Why We're Different", href: "#benefits" },
@@ -1646,6 +1655,11 @@ function HomePage() {
               Quick Links
             </h4>
             <ul className="text-sm text-[#FFFDE8]/80 space-y-1.5">
+              <li>
+                <a href="/about" className="hover:text-[#C9A97A] font-semibold text-[#C9A97A] transition-colors">
+                  The Practice (Corporate Profile)
+                </a>
+              </li>
               <li>
                 <a href="#why-us" className="hover:text-[#C9A97A] transition-colors">
                   Why Choose Us
