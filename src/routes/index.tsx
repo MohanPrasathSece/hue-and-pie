@@ -508,7 +508,7 @@ function HomePage() {
             >
               <span className="hidden xs:inline sm:inline">Get Free Quote</span>
               <span className="xs:hidden sm:hidden">Quote</span>
-              <ArrowUpRight size={14} aria-hidden="true" />
+              <ArrowUpRight size={14} aria-hidden="true" className="text-[#FFFDE8]" />
             </button>
 
             {/* Mobile Menu Toggle Button */}
@@ -521,9 +521,9 @@ function HomePage() {
               onClick={() => setMobileMenuOpen((open) => !open)}
             >
               {mobileMenuOpen ? (
-                <X size={18} aria-hidden="true" />
+                <X size={18} aria-hidden="true" className="text-[#FFFDE8]" />
               ) : (
-                <Menu size={18} aria-hidden="true" />
+                <Menu size={18} aria-hidden="true" className="text-[#FFFDE8]" />
               )}
             </button>
           </div>
@@ -575,10 +575,12 @@ function HomePage() {
       </header>
 
       {/* =========================================================================
-          SECTION 01 - HERO WITH LUXURY MIDNIGHT GLASS CONSULTATION CARD
+          SECTION 01 - HERO
           ========================================================================= */}
+
+      {/* Mobile Hero — full-screen headline only, form below */}
       <section
-        className="hero relative flex items-start sm:items-center pt-24 pb-10 sm:pt-28 sm:pb-16"
+        className="lg:hidden relative flex flex-col justify-end min-h-svh"
         id="home"
       >
         <img
@@ -591,52 +593,175 @@ function HomePage() {
         />
         <div className="hero-shade" aria-hidden="true" />
 
+        {/* Headline sits in the lower half of the full-screen image */}
+        <div className="relative z-10 px-5 pb-10 pt-24">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <h1 className="font-serif text-[32px] font-normal text-[#FFFDE8] leading-[1.18] tracking-tight mb-4">
+              Beautiful Homes,<br />
+              <em className="text-[#C9A97A] italic font-normal">Designed for You.</em>
+            </h1>
+            <p className="text-[15px] text-[#FFFDE8]/90 leading-relaxed mb-6 max-w-xs">
+              End-to-end interiors. Factory precision. 45-day move-in guarantee.
+            </p>
+            <button
+              type="button"
+              className="btn-cream w-full justify-center text-sm py-3"
+              onClick={() => handleOpenConsultation()}
+            >
+              <span>Book Free Consultation</span>
+              <ArrowUpRight size={15} />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Mobile consultation form — below the full-screen hero */}
+      <div className="lg:hidden bg-[#FFFDE8] px-5 py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="rounded-[24px] bg-white border border-[#E3D9C6] shadow-lg overflow-hidden">
+            <div className="px-5 pt-5 pb-4 border-b border-[#E3D9C6] bg-[#F3ECDD]/50">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#664465] block" />
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#664465]">
+                  Free 3D Consultation
+                </span>
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#2B2230]">
+                Talk to a Senior Designer
+              </h3>
+              <p className="text-xs text-[#6B5F6B] mt-1">Get a 3D plan + accurate quote. No commitment.</p>
+            </div>
+
+            <form onSubmit={handleHeroFormSubmit} className="px-5 py-5 space-y-3">
+              <div className="relative">
+                <input
+                  type="text"
+                  required
+                  id="hero-name-mobile"
+                  placeholder=" "
+                  value={heroForm.name}
+                  onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
+                  className="peer w-full px-4 pt-5 pb-2.5 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm placeholder-transparent focus:outline-none focus:border-[#664465] transition-all"
+                />
+                <label
+                  htmlFor="hero-name-mobile"
+                  className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[#6B5F6B]/50 peer-placeholder-shown:font-normal transition-all pointer-events-none"
+                >
+                  Your Name
+                </label>
+              </div>
+
+              <div className="flex rounded-xl border border-[#E3D9C6] bg-[#FAFAFA] overflow-hidden focus-within:border-[#664465] transition-all">
+                <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">
+                  +91
+                </span>
+                <input
+                  type="tel"
+                  required
+                  placeholder="Phone number"
+                  value={heroForm.phone}
+                  onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
+                  className="w-full px-4 py-3 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/50 bg-transparent focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="relative">
+                  <select
+                    value={heroForm.city}
+                    onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
+                    className="w-full px-3 pt-5 pb-2 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
+                  >
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Pune">Pune</option>
+                  </select>
+                  <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
+                </div>
+                <div className="relative">
+                  <select
+                    value={heroForm.bhk}
+                    onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
+                    className="w-full px-3 pt-5 pb-2 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
+                  >
+                    <option value="1 BHK">1 BHK</option>
+                    <option value="2 BHK">2 BHK</option>
+                    <option value="3 BHK">3 BHK</option>
+                    <option value="4+ BHK / Villa">4+ BHK / Villa</option>
+                  </select>
+                  <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 rounded-xl bg-[#664465] text-[#FFFDE8] text-sm font-bold hover:bg-[#4F3150] transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Get Free Quote &amp; 3D Plan</span>
+                <ArrowUpRight size={15} />
+              </button>
+
+              <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
+                <ShieldCheck className="w-3 h-3 text-[#664465]" />
+                <span>Free &bull; No Spam &bull; Direct Callback</span>
+              </p>
+            </form>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Desktop Hero — two-column with form card on the right */}
+      <section
+        className="hero relative hidden lg:flex items-center py-28"
+        id="home-desktop"
+      >
+        <img
+          className="hero-image"
+          src={livingLuxuryImage}
+          alt="Sunlit luxury living room designed by Hue & Pie"
+          width={1808}
+          height={1200}
+        />
+        <div className="hero-shade" aria-hidden="true" />
+
         <div className="section-wrap relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Direct Punchy Value Proposition */}
+          <div className="grid grid-cols-12 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="lg:col-span-7"
+              className="col-span-7"
             >
-
-              <h1 className="font-serif text-[28px] sm:text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.2] tracking-tight mb-3 sm:mb-4">
-                Hue &amp; Pie<span className="hidden sm:inline"> -</span><br className="hidden sm:block" />
-                <em className="text-[#C9A97A] italic font-normal sm:block">
+              <h1 className="font-serif text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.15] tracking-tight mb-4">
+                Hue &amp; Pie -<br />
+                <em className="text-[#C9A97A] italic font-normal">
                   Beautiful Homes, Designed for You.
                 </em>
               </h1>
-
-              <p className="text-base sm:text-lg text-[#FFFDE8] max-w-xl font-normal leading-relaxed mb-6">
+              <p className="text-lg text-[#FFFDE8] max-w-xl font-normal leading-relaxed mb-6">
                 End-to-end home interiors tailored to your lifestyle, space, and budget with factory
                 precision and genuine craftsmanship.
               </p>
-
-
-              {/* Mobile Quick Action */}
-              <div className="flex sm:hidden gap-3">
-                <button
-                  type="button"
-                  className="btn-cream w-full justify-center"
-                  onClick={() => handleOpenConsultation()}
-                >
-                  <span>Book Free Consultation</span>
-                  <ArrowUpRight size={15} />
-                </button>
-              </div>
             </motion.div>
 
-            {/* Right Column: Light Consultation Card */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="lg:col-span-5"
+              className="col-span-5"
             >
               <div className="rounded-[28px] bg-[#FFFDE8]/94 backdrop-blur-2xl border border-[#E3D9C6] shadow-2xl overflow-hidden">
-                {/* Card header strip */}
-                <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-4 sm:pb-5 border-b border-[#E3D9C6]">
+                <div className="px-7 pt-7 pb-5 border-b border-[#E3D9C6]">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="w-2 h-2 rounded-full bg-[#664465] block" />
                     <span className="text-[11px] font-semibold uppercase tracking-widest text-[#664465]">
@@ -651,8 +776,7 @@ function HomePage() {
                   </p>
                 </div>
 
-                <form onSubmit={handleHeroFormSubmit} className="px-5 sm:px-7 py-5 sm:py-6 space-y-3 sm:space-y-4">
-                  {/* Name field */}
+                <form onSubmit={handleHeroFormSubmit} className="px-7 py-6 space-y-4">
                   <div className="relative">
                     <input
                       type="text"
@@ -671,11 +795,8 @@ function HomePage() {
                     </label>
                   </div>
 
-                  {/* Phone field */}
                   <div className="flex rounded-2xl border border-[#E3D9C6] bg-white overflow-hidden focus-within:border-[#664465] focus-within:ring-1 focus-within:ring-[#664465]/20 transition-all">
-                    <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">
-                      +91
-                    </span>
+                    <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">+91</span>
                     <input
                       type="tel"
                       required
@@ -686,18 +807,17 @@ function HomePage() {
                     />
                   </div>
 
-                  {/* City + BHK row */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="relative">
                       <select
                         value={heroForm.city}
                         onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
-                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] transition-all appearance-none cursor-pointer"
+                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
                       >
-                        <option value="Bangalore" className="">Bangalore</option>
-                        <option value="Hyderabad" className="">Hyderabad</option>
-                        <option value="Mumbai" className="">Mumbai</option>
-                        <option value="Pune" className="">Pune</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Pune">Pune</option>
                       </select>
                       <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
                     </div>
@@ -705,18 +825,17 @@ function HomePage() {
                       <select
                         value={heroForm.bhk}
                         onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
-                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] transition-all appearance-none cursor-pointer"
+                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
                       >
-                        <option value="1 BHK" className="">1 BHK</option>
-                        <option value="2 BHK" className="">2 BHK</option>
-                        <option value="3 BHK" className="">3 BHK</option>
-                        <option value="4+ BHK / Villa" className="">4+ BHK / Villa</option>
+                        <option value="1 BHK">1 BHK</option>
+                        <option value="2 BHK">2 BHK</option>
+                        <option value="3 BHK">3 BHK</option>
+                        <option value="4+ BHK / Villa">4+ BHK / Villa</option>
                       </select>
                       <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
                     </div>
                   </div>
 
-                  {/* Submit */}
                   <button
                     type="submit"
                     className="w-full py-3.5 rounded-2xl bg-[#664465] text-[#FFFDE8] text-sm font-bold tracking-wide hover:bg-[#4F3150] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2 mt-1"
@@ -1409,10 +1528,10 @@ function HomePage() {
       {/* =========================================================================
           SECTION 12 - FAQS (TWO-COLUMN EDITORIAL LAYOUT)
           ========================================================================= */}
-      <section className="py-16 sm:py-24 bg-[#F3ECDD]/40 border-t border-[#E3D9C6]" id="faq">
+      <section className="py-12 sm:py-24 bg-[#F3ECDD]/40 border-t border-[#E3D9C6]" id="faq">
         <div className="section-wrap">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-16 items-start">
-            {/* Left: Sticky heading */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start">
+            {/* Left: heading */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1420,12 +1539,12 @@ function HomePage() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-28"
             >
-              <span className="eyebrow block mb-3">Got Questions?</span>
-              <h2 className="section-title text-[#2B2230] mb-4 leading-tight">
-                Common<br />Questions
+              <span className="eyebrow block mb-2">Got Questions?</span>
+              <h2 className="font-serif text-2xl sm:text-[36px] font-normal text-[#2B2230] mb-3 leading-tight">
+                Common Questions
               </h2>
-              <p className="text-base text-[#6B5F6B] leading-relaxed">
-                Everything you need to know before starting your home interior project.
+              <p className="text-sm sm:text-base text-[#6B5F6B] leading-relaxed">
+                Everything you need to know before starting your project.
               </p>
             </motion.div>
 
@@ -1439,10 +1558,10 @@ function HomePage() {
               <Accordion type="single" collapsible className="divide-y divide-[#E3D9C6] border-y border-[#E3D9C6]">
                 {faqs.map((faq, idx) => (
                   <AccordionItem key={idx} value={`faq-${idx}`} className="border-b-0 group">
-                    <AccordionTrigger className="text-xl font-medium text-[#2B2230] hover:text-[#664465] hover:no-underline py-6 cursor-pointer text-left transition-colors leading-snug">
+                    <AccordionTrigger className="text-base sm:text-xl font-medium text-[#2B2230] hover:text-[#664465] hover:no-underline py-4 sm:py-6 cursor-pointer text-left transition-colors leading-snug">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-[17px] text-[#6B5F6B] leading-relaxed pb-6">
+                    <AccordionContent className="text-sm sm:text-[17px] text-[#6B5F6B] leading-relaxed pb-4 sm:pb-6">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
