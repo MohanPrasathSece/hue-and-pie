@@ -1,8 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Background circle -->
-  <circle cx="32" cy="32" r="32" fill="#664465"/>
-  <!-- Letter H stylised -->
-  <text x="32" y="45" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#C9A97A" letter-spacing="-2">H</text>
-  <!-- Thin brass underline accent -->
-  <rect x="16" y="49" width="32" height="2.5" rx="1.25" fill="#C9A97A" opacity="0.6"/>
+  <rect width="64" height="64" rx="14" fill="#664465"/>
+  <!-- H letter -->
+  <rect x="10" y="14" width="5" height="36" rx="2" fill="#C9A97A"/>
+  <rect x="10" y="29" width="18" height="5" rx="2" fill="#C9A97A"/>
+  <rect x="23" y="14" width="5" height="36" rx="2" fill="#C9A97A"/>
+  <!-- & ampersand compact -->
+  <text x="34" y="47" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#FFFDE8" opacity="0.9">&amp;</text>
+  <!-- P letter -->
+  <rect x="46" y="14" width="5" height="36" rx="2" fill="#C9A97A"/>
+  <path d="M46 14 h8 a7 7 0 0 1 0 14 h-8 z" rx="2" fill="#C9A97A"/>
 </svg>

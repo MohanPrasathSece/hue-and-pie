@@ -577,281 +577,160 @@ function HomePage() {
       {/* =========================================================================
           SECTION 01 - HERO
           ========================================================================= */}
-
-      {/* Mobile Hero — full-screen headline only, form below */}
       <section
-        className="lg:hidden relative flex flex-col justify-end min-h-svh"
+        className="relative min-h-svh flex flex-col lg:flex-row lg:items-center overflow-hidden bg-[#664465]"
         id="home"
       >
+        {/* Background image — absolute, covers entire section */}
         <img
-          className="hero-image"
           src={livingLuxuryImage}
           alt="Sunlit luxury living room designed by Hue & Pie"
           width={1808}
           height={1200}
           fetchPriority="high"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          style={{ transform: "translateZ(0)" }}
         />
-        <div className="hero-shade" aria-hidden="true" />
+        {/* Overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-[1]"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(102,68,101,0.75) 0%, rgba(102,68,101,0.90) 60%, rgba(102,68,101,0.97) 100%)",
+          }}
+        />
 
-        {/* Headline sits in the lower half of the full-screen image */}
-        <div className="relative z-10 px-5 pb-10 pt-24">
+        {/* Content */}
+        <div className="relative z-10 w-full section-wrap flex flex-col lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center pt-28 pb-10 lg:py-28 gap-8">
+
+          {/* Left — headline */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
+            className="lg:col-span-7"
           >
-            <h1 className="font-serif text-[32px] font-normal text-[#FFFDE8] leading-[1.18] tracking-tight mb-4">
-              Beautiful Homes,<br />
-              <em className="text-[#C9A97A] italic font-normal">Designed for You.</em>
+            <h1 className="font-serif text-[36px] sm:text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.18] tracking-tight mb-4">
+              Hue &amp; Pie<br />
+              <em className="text-[#C9A97A] italic font-normal">Beautiful Homes, Designed for You.</em>
             </h1>
-            <p className="text-[15px] text-[#FFFDE8]/90 leading-relaxed mb-6 max-w-xs">
-              End-to-end interiors. Factory precision. 45-day move-in guarantee.
+            <p className="text-base sm:text-lg text-[#FFFDE8]/90 max-w-lg leading-relaxed mb-6">
+              End-to-end home interiors tailored to your lifestyle, space, and budget — factory
+              precision, genuine craftsmanship.
             </p>
-            <button
-              type="button"
-              className="btn-cream w-full justify-center text-sm py-3"
-              onClick={() => handleOpenConsultation()}
-            >
-              <span>Book Free Consultation</span>
-              <ArrowUpRight size={15} />
-            </button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Mobile consultation form — below the full-screen hero */}
-      <div className="lg:hidden bg-[#FFFDE8] px-5 py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="rounded-[24px] bg-white border border-[#E3D9C6] shadow-lg overflow-hidden">
-            <div className="px-5 pt-5 pb-4 border-b border-[#E3D9C6] bg-[#F3ECDD]/50">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#664465] block" />
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#664465]">
-                  Free 3D Consultation
-                </span>
-              </div>
-              <h3 className="font-serif text-xl font-normal text-[#2B2230]">
-                Talk to a Senior Designer
-              </h3>
-              <p className="text-xs text-[#6B5F6B] mt-1">Get a 3D plan + accurate quote. No commitment.</p>
-            </div>
-
-            <form onSubmit={handleHeroFormSubmit} className="px-5 py-5 space-y-3">
-              <div className="relative">
-                <input
-                  type="text"
-                  required
-                  id="hero-name-mobile"
-                  placeholder=" "
-                  value={heroForm.name}
-                  onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
-                  className="peer w-full px-4 pt-5 pb-2.5 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm placeholder-transparent focus:outline-none focus:border-[#664465] transition-all"
-                />
-                <label
-                  htmlFor="hero-name-mobile"
-                  className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[#6B5F6B]/50 peer-placeholder-shown:font-normal transition-all pointer-events-none"
-                >
-                  Your Name
-                </label>
-              </div>
-
-              <div className="flex rounded-xl border border-[#E3D9C6] bg-[#FAFAFA] overflow-hidden focus-within:border-[#664465] transition-all">
-                <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">
-                  +91
-                </span>
-                <input
-                  type="tel"
-                  required
-                  placeholder="Phone number"
-                  value={heroForm.phone}
-                  onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
-                  className="w-full px-4 py-3 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/50 bg-transparent focus:outline-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative">
-                  <select
-                    value={heroForm.city}
-                    onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
-                    className="w-full px-3 pt-5 pb-2 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
-                  >
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Mumbai">Mumbai</option>
-                    <option value="Pune">Pune</option>
-                  </select>
-                  <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
-                </div>
-                <div className="relative">
-                  <select
-                    value={heroForm.bhk}
-                    onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
-                    className="w-full px-3 pt-5 pb-2 rounded-xl bg-[#FAFAFA] border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
-                  >
-                    <option value="1 BHK">1 BHK</option>
-                    <option value="2 BHK">2 BHK</option>
-                    <option value="3 BHK">3 BHK</option>
-                    <option value="4+ BHK / Villa">4+ BHK / Villa</option>
-                  </select>
-                  <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
-                </div>
-              </div>
-
+            {/* CTA visible on mobile only */}
+            <div className="lg:hidden">
               <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl bg-[#664465] text-[#FFFDE8] text-sm font-bold hover:bg-[#4F3150] transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                type="button"
+                className="btn-cream w-full justify-center text-sm py-3"
+                onClick={() => handleOpenConsultation()}
               >
-                <span>Get Free Quote &amp; 3D Plan</span>
+                <span>Book Free Consultation</span>
                 <ArrowUpRight size={15} />
               </button>
+            </div>
+          </motion.div>
 
-              <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
-                <ShieldCheck className="w-3 h-3 text-[#664465]" />
-                <span>Free &bull; No Spam &bull; Direct Callback</span>
-              </p>
-            </form>
-          </div>
-        </motion.div>
-      </div>
+          {/* Right — form card */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="lg:col-span-5"
+          >
+            <div className="rounded-[24px] bg-[#FFFDE8]/96 backdrop-blur-xl border border-[#E3D9C6] shadow-2xl overflow-hidden">
+              <div className="px-5 sm:px-7 pt-5 sm:pt-7 pb-4 border-b border-[#E3D9C6] bg-[#F3ECDD]/40">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-[#664465] block" />
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#664465]">
+                    Free 3D Consultation
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#2B2230] leading-snug">
+                  Talk to a Senior Designer
+                </h3>
+                <p className="text-xs sm:text-sm text-[#6B5F6B] mt-1">
+                  Get a 3D plan + itemised quote. No commitment needed.
+                </p>
+              </div>
 
-      {/* Desktop Hero — two-column with form card on the right */}
-      <section
-        className="hero relative hidden lg:flex items-center py-28"
-        id="home-desktop"
-      >
-        <img
-          className="hero-image"
-          src={livingLuxuryImage}
-          alt="Sunlit luxury living room designed by Hue & Pie"
-          width={1808}
-          height={1200}
-        />
-        <div className="hero-shade" aria-hidden="true" />
-
-        <div className="section-wrap relative z-10 w-full">
-          <div className="grid grid-cols-12 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="col-span-7"
-            >
-              <h1 className="font-serif text-5xl lg:text-[54px] font-normal text-[#FFFDE8] leading-[1.15] tracking-tight mb-4">
-                Hue &amp; Pie -<br />
-                <em className="text-[#C9A97A] italic font-normal">
-                  Beautiful Homes, Designed for You.
-                </em>
-              </h1>
-              <p className="text-lg text-[#FFFDE8] max-w-xl font-normal leading-relaxed mb-6">
-                End-to-end home interiors tailored to your lifestyle, space, and budget with factory
-                precision and genuine craftsmanship.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="col-span-5"
-            >
-              <div className="rounded-[28px] bg-[#FFFDE8]/94 backdrop-blur-2xl border border-[#E3D9C6] shadow-2xl overflow-hidden">
-                <div className="px-7 pt-7 pb-5 border-b border-[#E3D9C6]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="w-2 h-2 rounded-full bg-[#664465] block" />
-                    <span className="text-[11px] font-semibold uppercase tracking-widest text-[#664465]">
-                      Free 3D Consultation
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-2xl font-normal text-[#2B2230] leading-snug">
-                    Talk to a Senior Designer
-                  </h3>
-                  <p className="text-sm text-[#6B5F6B] mt-1">
-                    Get a 3D plan + itemised quote — no commitment needed.
-                  </p>
+              <form onSubmit={handleHeroFormSubmit} className="px-5 sm:px-7 py-5 space-y-3">
+                <div className="relative">
+                  <input
+                    type="text"
+                    required
+                    id="hero-name"
+                    placeholder=" "
+                    value={heroForm.name}
+                    onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
+                    className="peer w-full px-4 pt-5 pb-2.5 rounded-xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm placeholder-transparent focus:outline-none focus:border-[#664465] focus:ring-1 focus:ring-[#664465]/20 transition-all"
+                  />
+                  <label
+                    htmlFor="hero-name"
+                    className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[#6B5F6B]/60 peer-placeholder-shown:font-normal transition-all pointer-events-none"
+                  >
+                    Your Name
+                  </label>
                 </div>
 
-                <form onSubmit={handleHeroFormSubmit} className="px-7 py-6 space-y-4">
+                <div className="flex rounded-xl border border-[#E3D9C6] bg-white overflow-hidden focus-within:border-[#664465] focus-within:ring-1 focus-within:ring-[#664465]/20 transition-all">
+                  <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">+91</span>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="Phone number"
+                    value={heroForm.phone}
+                    onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
+                    className="w-full px-4 py-3 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/50 bg-transparent focus:outline-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      id="hero-name"
-                      placeholder=" "
-                      value={heroForm.name}
-                      onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
-                      className="peer w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm placeholder-transparent focus:outline-none focus:border-[#664465] focus:ring-1 focus:ring-[#664465]/20 transition-all"
-                    />
-                    <label
-                      htmlFor="hero-name"
-                      className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[#6B5F6B]/60 peer-placeholder-shown:font-normal transition-all pointer-events-none"
+                    <select
+                      value={heroForm.city}
+                      onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
+                      className="w-full px-3 pt-5 pb-2 rounded-xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
                     >
-                      Your Name
-                    </label>
+                      <option value="Bangalore">Bangalore</option>
+                      <option value="Hyderabad">Hyderabad</option>
+                      <option value="Mumbai">Mumbai</option>
+                      <option value="Pune">Pune</option>
+                    </select>
+                    <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
                   </div>
-
-                  <div className="flex rounded-2xl border border-[#E3D9C6] bg-white overflow-hidden focus-within:border-[#664465] focus-within:ring-1 focus-within:ring-[#664465]/20 transition-all">
-                    <span className="px-4 flex items-center text-[#664465] font-semibold text-sm border-r border-[#E3D9C6] bg-[#F3ECDD] shrink-0">+91</span>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Phone number"
-                      value={heroForm.phone}
-                      onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
-                      className="w-full px-4 py-3.5 text-sm text-[#2B2230] placeholder:text-[#6B5F6B]/50 bg-transparent focus:outline-none"
-                    />
+                  <div className="relative">
+                    <select
+                      value={heroForm.bhk}
+                      onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
+                      className="w-full px-3 pt-5 pb-2 rounded-xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
+                    >
+                      <option value="1 BHK">1 BHK</option>
+                      <option value="2 BHK">2 BHK</option>
+                      <option value="3 BHK">3 BHK</option>
+                      <option value="4+ BHK / Villa">4+ BHK / Villa</option>
+                    </select>
+                    <span className="absolute left-3 top-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
                   </div>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="relative">
-                      <select
-                        value={heroForm.city}
-                        onChange={(e) => setHeroForm({ ...heroForm, city: e.target.value })}
-                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
-                      >
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Hyderabad">Hyderabad</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Pune">Pune</option>
-                      </select>
-                      <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">City</span>
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={heroForm.bhk}
-                        onChange={(e) => setHeroForm({ ...heroForm, bhk: e.target.value })}
-                        className="w-full px-4 pt-5 pb-2.5 rounded-2xl bg-white border border-[#E3D9C6] text-[#2B2230] text-sm focus:outline-none focus:border-[#664465] appearance-none cursor-pointer"
-                      >
-                        <option value="1 BHK">1 BHK</option>
-                        <option value="2 BHK">2 BHK</option>
-                        <option value="3 BHK">3 BHK</option>
-                        <option value="4+ BHK / Villa">4+ BHK / Villa</option>
-                      </select>
-                      <span className="absolute left-4 top-1.5 text-[10px] font-semibold uppercase tracking-widest text-[#664465] pointer-events-none">Type</span>
-                    </div>
-                  </div>
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-[#664465] text-[#FFFDE8] text-sm font-bold hover:bg-[#4F3150] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Get Free Quote &amp; 3D Plan</span>
+                  <ArrowUpRight size={15} />
+                </button>
 
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-2xl bg-[#664465] text-[#FFFDE8] text-sm font-bold tracking-wide hover:bg-[#4F3150] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2 mt-1"
-                  >
-                    <span>Get Free Quote &amp; 3D Plan</span>
-                    <ArrowUpRight size={16} />
-                  </button>
+                <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
+                  <ShieldCheck className="w-3 h-3 text-[#664465]" />
+                  <span>Free &bull; No Spam &bull; Direct Callback</span>
+                </p>
+              </form>
+            </div>
+          </motion.div>
 
-                  <p className="text-[11px] text-center text-[#6B5F6B] flex items-center justify-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#664465]" />
-                    <span>Free Consultation &bull; Zero Spam &bull; Direct Callback</span>
-                  </p>
-                </form>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
