@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -686,7 +686,7 @@ function HomePage() {
           className="absolute inset-0 w-full h-full object-cover object-center"
           style={{ zIndex: 0, transform: "translateZ(0)" }}
         />
-        {/* Overlay — strong left shade on desktop, full dark backdrop on mobile */}
+        {/* Overlay  -  strong left shade on desktop, full dark backdrop on mobile */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[#2B2230]/75 sm:bg-transparent"
@@ -726,7 +726,7 @@ function HomePage() {
                 {/* Subline */}
                 <p className="text-[#FFFDE8]/85 leading-relaxed mb-8 max-w-[520px]"
                    style={{ fontSize: "clamp(15px, 1.2vw, 18px)" }}>
-                  End-to-end home interiors tailored to your lifestyle, space, and budget —
+                  End-to-end home interiors tailored to your lifestyle, space, and budget  - 
                   factory precision, 45-day move-in guarantee, and genuine craftsmanship.
                 </p>
 
@@ -753,7 +753,7 @@ function HomePage() {
                 </div>
               </motion.div>
 
-              {/* ── Right: form card — visible on mobile and desktop ── */}
+              {/* ── Right: form card  -  visible on mobile and desktop ── */}
               <motion.div
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -776,7 +776,7 @@ function HomePage() {
                     Talk to a Senior Designer
                   </h2>
                   <p className="text-sm text-[#6B5F6B] mt-1">
-                    Get an itemised 3D plan &amp; accurate quote — zero obligation.
+                    Get an itemised 3D plan &amp; accurate quote  -  zero obligation.
                   </p>
                 </div>
 
